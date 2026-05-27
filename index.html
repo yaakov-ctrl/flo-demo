@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flo | Demo</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:#0a0a0a;
+  color:#fff;
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  overflow-x:hidden;
+}
+.logo{
+  font-size:2.5rem;
+  font-weight:700;
+  letter-spacing:-0.02em;
+  margin-bottom:0.5rem;
+  background:linear-gradient(135deg,#fff 0%,#999 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.subtitle{
+  color:#666;
+  font-size:0.95rem;
+  margin-bottom:2.5rem;
+  letter-spacing:0.02em;
+}
+.video-wrap{
+  position:relative;
+  width:90vw;
+  max-width:960px;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 0 80px rgba(255,255,255,0.03),0 0 2px rgba(255,255,255,0.1);
+  background:#111;
+  aspect-ratio:16/9;
+}
+.video-wrap iframe{
+  width:100%;
+  height:100%;
+  border:none;
+  border-radius:12px;
+}
+.footer{
+  margin-top:2.5rem;
+  color:#444;
+  font-size:0.8rem;
+  letter-spacing:0.03em;
+}
+@media(max-width:600px){
+  .logo{font-size:1.8rem}
+  .video-wrap{width:95vw;border-radius:8px}
+}
+</style>
+</head>
+<body>
+
+<div class="logo">Flo</div>
+<div class="subtitle">Product Demo</div>
+
+<div class="video-wrap">
+  <iframe
+    id="demoVideo"
+    src="GOOGLE_DRIVE_EMBED_URL"
+    allow="autoplay"
+    allowfullscreen
+  ></iframe>
+</div>
+
+<div class="footer">Flo &copy; 2025 &middot; Confidential</div>
+
+<script>
+(function(){
+  var TRACKER = "https://script.google.com/macros/s/AKfycbxErgC49zEMGPdkp8FW2zov_Qsbv4wOpOFDDaRgp06osMyTMWVr4UzbF2A9P2oN9aZ4V/exec";
+  var sid = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substr(2);
+
+  function track(event, progress) {
+    var data = {
+      event: event,
+      userAgent: navigator.userAgent,
+      progress: progress || '',
+      referrer: document.referrer || 'direct',
+      sessionId: sid
+    };
+    try {
+      navigator.sendBeacon(TRACKER, JSON.stringify(data));
+    } catch(e) {
+      fetch(TRACKER, {method:'POST', body:JSON.stringify(data), mode:'no-cors'}).catch(function(){});
+    }
+  }
+
+  track('page_open', '0%');
+
+  document.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+  document.addEventListener('keydown', function(e){
+    if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S')) e.preventDefault();
+  });
+
+  window.addEventListener('beforeunload', function(){
+    track('page_close', '');
+  });
+
+  var startTime = Date.now();
+  setInterval(function(){
+    var mins = Math.round((Date.now() - startTime) / 60000);
+    if (mins === 1) track('watched_1min', '1min');
+    if (mins === 3) track('watched_3min', '3min');
+    if (mins === 5) track('watched_5min', '5min');
+    if (mins === 10) track('watched_10min', '10min');
+  }, 60000);
+})();
+</script>
+</body>
+</html>
