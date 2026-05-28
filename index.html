@@ -49,6 +49,13 @@ body{
   border:none;
   border-radius:12px;
 }
+.video-wrap .drive-block{
+  position:absolute;
+  top:0;right:0;
+  width:60px;height:60px;
+  z-index:10;
+  cursor:default;
+}
 .footer{
   margin-top:2.5rem;
   color:#444;
@@ -73,6 +80,7 @@ body{
     allow="autoplay"
     allowfullscreen
   ></iframe>
+  <div class="drive-block"></div>
 </div>
 
 <div class="footer">Flo &copy; 2025 &middot; Confidential</div>
